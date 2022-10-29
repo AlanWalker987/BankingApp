@@ -7,5 +7,7 @@ namespace BankingApp
     {
         WithdrawalModel GetWithdrawalDetail();
         string SaveWithdrawalDetail(WithdrawalModel withdrawalModel);
+
+        decimal GetRemainingBalance();
     }
 }

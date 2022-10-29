@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace BankingApp
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -24,6 +24,7 @@ namespace BankingApp
             Console.WriteLine("Enter 3 to withdraw the amount");
             Console.WriteLine("Enter 4 to get Deposit Info");
             Console.WriteLine("Enter 5 to get withdrawal info");
+            Console.WriteLine("Enter 6 to get the balance amount");
 
             string operation = Console.ReadLine();
 
@@ -77,8 +78,19 @@ namespace BankingApp
                     Console.WriteLine("Enter the Widthdrawal Id");
                     withdrawalModel.WithdrawalId = Convert.ToInt32(Console.ReadLine());
 
-                    Console.WriteLine("Enter the amount to withdraw");
-                    withdrawalModel.AmountWithdrawn = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        Console.WriteLine("Enter the amount to withdraw");
+                        withdrawalModel.AmountWithdrawn = Convert.ToInt32(Console.ReadLine());
+
+                        if(withdrawalModel.AmountWithdrawn > depositModel.AmountDeposited)
+                        {
+                            throw new Exception("Insufficent Amount");
+                        }
+                    }catch(Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
 
                     Console.WriteLine("Enter the Account Holder id");
                     withdrawalModel.AccountHolderId = Convert.ToInt32(Console.ReadLine());
@@ -110,6 +122,11 @@ namespace BankingApp
                     Console.WriteLine("Amount Withdrawn - {0}",withdrawData.AmountWithdrawn);
                     Console.WriteLine("Date of Withdrawal - {0}",withdrawData.DateofWithdraw);
                     Console.WriteLine("-----------------------------");
+                    break;
+                case "6":
+                    Withdrawal withdrawInform = new Withdrawal();
+                    decimal balance = withdrawInform.GetRemainingBalance();
+                    Console.WriteLine("Balance in the account is {0}", balance);
                     break;
             }
 
